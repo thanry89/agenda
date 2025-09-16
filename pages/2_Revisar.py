@@ -2,7 +2,7 @@ import streamlit as st
 #import pandas as pd
 import pickle
 
-st.set_page_config(page_title="Revisar", page_icon="🌍", layout='wide')
+st.set_page_config(page_title="Revisar", layout='wide')
 
 st.header("Revisar Registro")
 
@@ -17,11 +17,11 @@ option = st.selectbox(
         placeholder="Escoja el Dr..."
 )
 
-st.dataframe(data[data['Doctor'] == option], use_container_width=True)
+filtered_df = data[data['Doctor']==option]
 
-option = st.selectbox(
-        'Eliminar Registro',
-        data.index,
-        index=None,
-        placeholder="Seleccionar Registro"
-)
+#edited_df = st.data_editor(filtered_df, num_rows="dynamic")
+
+st.dataframe(filtered_df,use_container_width=True)
+
+if st.button("Editar"):
+        st.switch_page('pages/3_Editar.py')
