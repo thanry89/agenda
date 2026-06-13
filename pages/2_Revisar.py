@@ -1,14 +1,12 @@
 import streamlit as st
-#import pandas as pd
 import pickle
 
 st.set_page_config(page_title="Revisar", layout='wide')
 
 st.header("Revisar Registro")
 
-
 with open('data/glendaDatabase.pkl', "rb") as file:
-        data = pickle.load(file)
+        data,_ = pickle.load(file)
 
 option = st.selectbox(
         'Seleccione el Dr:',
@@ -19,9 +17,9 @@ option = st.selectbox(
 
 filtered_df = data[data['Doctor']==option]
 
-#edited_df = st.data_editor(filtered_df, num_rows="dynamic")
-
-st.dataframe(filtered_df,use_container_width=True)
+if option:
+        filtered_df.drop('Doctor', axis=1, inplace=True)
+        st.dataframe(filtered_df,width='content', hide_index=True)
 
 if st.button("Editar"):
         st.switch_page('pages/3_Editar.py')
